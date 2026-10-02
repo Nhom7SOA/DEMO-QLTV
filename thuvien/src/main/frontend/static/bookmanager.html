@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -16,18 +16,29 @@
     <div class="header">Hệ thống Thư viện</div>
 
     <div class="menu">
+
         <a href="/index.html">Trang chủ</a>
+
         <a href="/bookmanager.html" class="active">Quản lý Sách</a>
+
+        <a href="/addbook.html">Thêm sách</a>
+
         <a href="#">Quản lý Người mượn</a>
+
         <a href="#">Quản lý Phiếu mượn</a>
+
         <a href="#" onclick="logout()">Đăng xuất</a>
+
     </div>
 
     <div class="container">
 
         <div class="page-title">
+
             <h2>Quản lý Sách</h2>
+
             <p>Danh sách các cuốn sách trong thư viện</p>
+
         </div>
 
         <div class="total-books" id="totalBooks">
@@ -39,6 +50,7 @@
             <table class="book-table">
 
                 <thead>
+
                     <tr>
                         <th>Tiêu đề</th>
                         <th>Tác giả</th>
@@ -46,6 +58,7 @@
                         <th>Năm xuất bản</th>
                         <th>Thể loại</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="bookList">
@@ -62,6 +75,7 @@
     </div>
 
     <script>
+
         if (!localStorage.getItem("username")) {
             window.location.href = "/login.html";
         }
@@ -103,8 +117,10 @@
                     "Tổng số sách: " + data.totalElements;
 
                 if (data.content.length === 0) {
+
                     message.textContent = "Không có sách trong thư viện.";
                     return;
+
                 }
 
                 message.textContent = "";
@@ -124,6 +140,7 @@
                     values.forEach(value => {
 
                         const cell = document.createElement("td");
+
                         cell.textContent = value ?? "";
 
                         row.appendChild(cell);
@@ -207,8 +224,10 @@
         }
 
         loadBooks(0);
+
     </script>
 
 </body>
 
 </html>
+```

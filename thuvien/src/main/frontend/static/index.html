@@ -1,15 +1,13 @@
+```html
 <!DOCTYPE html>
-
 <html lang="vi">
 
 <head>
-
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ thống Thư viện</title>
 
     <link rel="stylesheet" href="/style.css">
-
 </head>
 
 <body>
@@ -18,9 +16,11 @@
 
     <div class="menu">
 
-        <a href="index.html">Trang chủ</a>
+        <a href="/index.html">Trang chủ</a>
 
-        <a href="#">Quản lý Sách</a>
+        <a href="/bookmanager.html">Quản lý Sách</a>
+
+        <a href="/addbook.html">Thêm sách</a>
 
         <a href="#">Quản lý Người mượn</a>
 
@@ -48,7 +48,7 @@
 
     </div>
 
-    <!-- Form chi tiết (hiện đè lên nền) -->
+    <!-- Form chi tiết sách -->
 
     <div class="overlay" id="overlay" onclick="dongForm()">
 
@@ -90,10 +90,17 @@
 
     </script>
 
+    <script>
+
+        if (!localStorage.getItem("username")) {
+
+            window.location.href = "/login.html";
+
+        }
+
+    </script>
+
 </body>
-<script>
-    if (!localStorage.getItem("username")) {
-        window.location.href = "/login.html";
-    }
-</script>
+
 </html>
+```
