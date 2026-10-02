@@ -1,0 +1,142 @@
+
+/* Tiêu đề trang */
+
+.page-title {
+    margin-bottom: 20px;
+}
+
+.page-title h2 {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.page-title p {
+    color: #666;
+}
+
+/* Đánh dấu menu đang được chọn */
+
+.menu a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Tổng số sách */
+
+.total-books {
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Bảng quản lý sách */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.book-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.book-table th,
+.book-table td {
+    padding: 14px;
+    border: 1px solid #ddd;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+/* Cột tiêu đề chiếm 40% */
+
+.book-table th:nth-child(1),
+.book-table td:nth-child(1) {
+    width: 40%;
+}
+
+/* Bốn cột còn lại mỗi cột chiếm 15% */
+
+.book-table th:nth-child(2),
+.book-table td:nth-child(2),
+.book-table th:nth-child(3),
+.book-table td:nth-child(3),
+.book-table th:nth-child(4),
+.book-table td:nth-child(4),
+.book-table th:nth-child(5),
+.book-table td:nth-child(5) {
+    width: 15%;
+}
+
+/* Màu sắc bảng */
+
+.book-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.book-table tbody tr:nth-child(even) {
+    background-color: #f2f6fc;
+}
+
+.book-table tbody tr:hover {
+    background-color: #e8f1ff;
+}
+
+/* Phân trang */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.pagination button {
+    padding: 9px 14px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled),
+.pagination button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Thông báo */
+
+.message {
+    text-align: center;
+    padding: 20px;
+}
+
+.error {
+    color: red;
+}
+
+/* Giao diện điện thoại */
+
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .book-table {
+        min-width: 750px;
+    }
+}

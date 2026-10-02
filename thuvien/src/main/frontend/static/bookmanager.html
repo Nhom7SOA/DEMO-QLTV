@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Sách - Hệ thống Thư viện</title>
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/bookmanager.css">
+</head>
+
+<body>
+
+    <div class="header">Hệ thống Thư viện</div>
+
+    <div class="menu">
+        <a href="/index.html">Trang chủ</a>
+        <a href="/bookmanager.html" class="active">Quản lý Sách</a>
+        <a href="#">Quản lý Người mượn</a>
+        <a href="#">Quản lý Phiếu mượn</a>
+        <a href="#" onclick="logout()">Đăng xuất</a>
+    </div>
+
+    <div class="container">
+
+        <div class="page-title">
+            <h2>Quản lý Sách</h2>
+            <p>Danh sách các cuốn sách trong thư viện</p>
+        </div>
+
+        <div class="total-books" id="totalBooks">
+            Đang tải dữ liệu...
+        </div>
+
+        <div class="table-container">
+
+            <table class="book-table">
+
+                <thead>
+                    <tr>
+                        <th>Tiêu đề</th>
+                        <th>Tác giả</th>
+                        <th>Nhà sản xuất</th>
+                        <th>Năm xuất bản</th>
+                        <th>Thể loại</th>
+                    </tr>
+                </thead>
+
+                <tbody id="bookList">
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <div class="pagination" id="pagination"></div>
+
+    </div>
+
+    <script>
+        if (!localStorage.getItem("username")) {
+            window.location.href = "/login.html";
+        }
+
+        const API_URL = "/api/bookmanager/page";
+        const PAGE_SIZE = 10;
+
+        let currentPage = 0;
+        let totalPages = 0;
+
+        async function loadBooks(page = 0) {
+
+            const bookList = document.getElementById("bookList");
+            const message = document.getElementById("message");
+            const pagination = document.getElementById("pagination");
+
+            bookList.innerHTML = "";
+            pagination.innerHTML = "";
+
+            message.textContent = "Đang tải dữ liệu...";
+            message.className = "message";
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}?page=${page}&size=${PAGE_SIZE}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Không thể tải danh sách sách.");
+                }
+
+                const data = await response.json();
+
+                currentPage = data.number;
+                totalPages = data.totalPages;
+
+                document.getElementById("totalBooks").textContent =
+                    "Tổng số sách: " + data.totalElements;
+
+                if (data.content.length === 0) {
+                    message.textContent = "Không có sách trong thư viện.";
+                    return;
+                }
+
+                message.textContent = "";
+
+                data.content.forEach(book => {
+
+                    const row = document.createElement("tr");
+
+                    const values = [
+                        book.title,
+                        book.author,
+                        book.publisher,
+                        book.publishYear,
+                        book.genre
+                    ];
+
+                    values.forEach(value => {
+
+                        const cell = document.createElement("td");
+                        cell.textContent = value ?? "";
+
+                        row.appendChild(cell);
+
+                    });
+
+                    bookList.appendChild(row);
+
+                });
+
+                renderPagination();
+
+            } catch (error) {
+
+                message.textContent = error.message;
+                message.className = "message error";
+
+            }
+
+        }
+
+        function renderPagination() {
+
+            const pagination = document.getElementById("pagination");
+
+            pagination.innerHTML = "";
+
+            if (totalPages <= 1) {
+                return;
+            }
+
+            const previousButton = document.createElement("button");
+
+            previousButton.textContent = "Trang trước";
+            previousButton.disabled = currentPage === 0;
+
+            previousButton.onclick = function () {
+                loadBooks(currentPage - 1);
+            };
+
+            pagination.appendChild(previousButton);
+
+            for (let i = 0; i < totalPages; i++) {
+
+                const button = document.createElement("button");
+
+                button.textContent = i + 1;
+
+                if (i === currentPage) {
+                    button.classList.add("active");
+                }
+
+                button.onclick = function () {
+                    loadBooks(i);
+                };
+
+                pagination.appendChild(button);
+
+            }
+
+            const nextButton = document.createElement("button");
+
+            nextButton.textContent = "Trang sau";
+            nextButton.disabled = currentPage === totalPages - 1;
+
+            nextButton.onclick = function () {
+                loadBooks(currentPage + 1);
+            };
+
+            pagination.appendChild(nextButton);
+
+        }
+
+        function logout() {
+
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+
+            window.location.href = "/login.html";
+
+        }
+
+        loadBooks(0);
+    </script>
+
+</body>
+
+</html>
