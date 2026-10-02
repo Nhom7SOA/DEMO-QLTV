@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Hệ thống Thư viện</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+    <div class="header">Hệ thống Thư viện</div>
+
+    <div class="menu">
+
+        <a href="index.html">Trang chủ</a>
+
+        <a href="#">Quản lý Sách</a>
+
+        <a href="#">Quản lý Người mượn</a>
+
+        <a href="#">Quản lý Phiếu mượn</a>
+
+        <a href="#" onclick="logout()">Đăng xuất</a>
+
+    </div>
+
+    <div class="container">
+
+        <div class="search-box">
+
+            <input type="text" id="keyword" placeholder="Tìm sách...">
+
+            <button onclick="timKiem()">Tìm</button>
+
+            <button onclick="loadSachNgauNhien()">Làm mới</button>
+
+        </div>
+
+        <!-- Danh sách sách -->
+
+        <div class="book-list" id="bookList"></div>
+
+    </div>
+
+    <!-- Form chi tiết (hiện đè lên nền) -->
+
+    <div class="overlay" id="overlay" onclick="dongForm()">
+
+        <div class="detail-box" onclick="event.stopPropagation()">
+
+            <span class="close" onclick="dongForm()">&times;</span>
+
+            <h2>Thông tin chi tiết sách</h2>
+
+            <img id="dImage" src="" alt="">
+
+            <p><b>Tên sách:</b> <span id="dTitle"></span></p>
+
+            <p><b>Tác giả:</b> <span id="dAuthor"></span></p>
+
+            <p><b>Nhà xuất bản:</b> <span id="dPublisher"></span></p>
+
+            <p><b>Năm xuất bản:</b> <span id="dYear"></span></p>
+
+            <p><b>Thể loại:</b> <span id="dGenre"></span></p>
+
+        </div>
+
+    </div>
+
+    <script src="/app.js"></script>
+
+    <script>
+
+        function logout() {
+
+            localStorage.removeItem("username");
+
+            localStorage.removeItem("role");
+
+            window.location.href = "/login.html";
+
+        }
+
+    </script>
+
+</body>
+<script>
+    if (!localStorage.getItem("username")) {
+        window.location.href = "/login.html";
+    }
+</script>
+</html>
